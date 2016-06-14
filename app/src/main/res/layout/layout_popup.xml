@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/dimond_face"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dz"/>
+
+    <ImageButton
+        android:id="@+id/spade_face"
+        android:layout_toRightOf="@id/dimond_face"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sz" />
+
+    <ImageButton
+        android:id="@+id/heart_face"
+        android:layout_toRightOf="@id/spade_face"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/hz" />
+
+    <ImageButton
+        android:id="@+id/clover_face"
+        android:layout_toRightOf="@id/heart_face"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cz" />
+
+</RelativeLayout>
