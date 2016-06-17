@@ -2,6 +2,7 @@ package com.example.vinodhkumara.crazyeight;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,9 +26,11 @@ import java.util.HashMap;
 public class MainActivity extends ActionBarActivity {
     private static String TAG = "MainActivity";
     private GridView mCardGridView = null;
+    //private ListView mComputerCardList = null;
     private Context mContext = null;
+    private ImageView mComputerCardList = null;
     private ImageView mTopCardImage = null;
-    private Button mFetchCardBtn = null;
+    private ImageButton mFetchCardBtn = null;
     private TextView mPlayIstruction = null;
     private TextView mComputerPlayDetail = null;
     public Utils mUtils = null;
@@ -84,6 +88,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); // Setting application only in portait mode
         setContentView(R.layout.activity_main);
         mContext = getApplicationContext();
         mUtils = new Utils();
@@ -94,7 +99,7 @@ public class MainActivity extends ActionBarActivity {
         initUI();
 
         mCardGridView.setAdapter(new CardDisplayGrid(mContext, mHumanImageIds));
-
+        //mComputerCardList.setAdapter(new ComputerCardList(mContext));
         mCardGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
@@ -149,16 +154,16 @@ public class MainActivity extends ActionBarActivity {
 
     private void initUI() {
         mTopCardImage = (ImageView) findViewById(R.id.open_card_image);
-        mFetchCardBtn = (Button) findViewById(R.id.fetch_btn);
+        mFetchCardBtn = (ImageButton) findViewById(R.id.fetch_btn);
         mPlayIstruction = (TextView) findViewById(R.id.play_info);
         mComputerPlayDetail = (TextView) findViewById(R.id.computer_play_info);
         mCardGridView = (GridView) findViewById(R.id.card_grid);
+        mComputerCardList = (ImageView) findViewById(R.id.computer_cards_list);
 
         mTopCardImage.setImageResource(mTopImageCardId);
-        mPlayIstruction.setText("Welcome to Crazy Eight");
-        mComputerPlayDetail.setText("Computer has 5 cards right now");
+        mFetchCardBtn.setImageResource(R.drawable.card_backside_1);
         mFetchCardBtn.setOnClickListener(mFetchBtnOnClickListener);
-
+        mComputerCardList.setImageResource(R.drawable.computer_card_5);
     }
 
     private void initCards() {
@@ -234,12 +239,19 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void playComputerUI() {
+        int num_of_computer_cards = 0;
         String mTopCard = mUtils.getTopCard();
         String mTopCardAfterComputerPlay = mUtils.playComputer(mTopCard);
         mTopImageCardId = cardsToImages.get(mTopCardAfterComputerPlay);
         mTopCardImage.setImageResource(mTopImageCardId);
+        num_of_computer_cards = mUtils.getTotalNumberOfComputerCards();
         String mComputerDetail = "Your Computer has" + mUtils.getTotalNumberOfComputerCards() + "Cards" +  "And" + "Total card Deck  = " + mUtils.getTotalNumberOfCardDecks();
         mComputerPlayDetail.setText(mComputerDetail);
+        // Displaying computer cards
+        if (num_of_computer_cards <= 8) {
+            displayComputerCards(num_of_computer_cards);
+        }
+        // Checking Computer WIN condition
         if (mUtils.getTotalNumberOfComputerCards() == 0) {
             Toast.makeText(mContext, "COMPUTER WON the Match ",
                     Toast.LENGTH_LONG).show();
@@ -303,5 +315,34 @@ public class MainActivity extends ActionBarActivity {
         dialog.show();
         Log.d("TAG", "Dialog = " + mHumanSelectSuite);
         return mHumanSelectSuite;
+    }
+
+    public void displayComputerCards(int num_cards) {
+        switch (num_cards) {
+            case 1:
+                mComputerCardList.setImageResource(R.drawable.computer_card);
+                break;
+            case 2:
+                mComputerCardList.setImageResource(R.drawable.computer_card_2);
+                break;
+            case 3:
+                mComputerCardList.setImageResource(R.drawable.computer_card_3);
+                break;
+            case 4:
+                mComputerCardList.setImageResource(R.drawable.computer_card_4);
+                break;
+            case 5:
+                mComputerCardList.setImageResource(R.drawable.computer_card_5);
+                break;
+            case 6:
+                mComputerCardList.setImageResource(R.drawable.computer_card_6);
+                break;
+            case 7:
+                mComputerCardList.setImageResource(R.drawable.computer_card_7);
+                break;
+            case 8:
+                mComputerCardList.setImageResource(R.drawable.computer_card_8);
+                break;
+        }
     }
 }
