@@ -2,7 +2,7 @@
 Crazy Eight Game
 This application developed using Android. 
 
-How to play ?
+
 Each player is distributed an equal number of cards in the beginning of the play.(Usually 5)
 The aim of the game is to dispose off all the cards you have.
 A valid card to dispose during your turn is a card with the same suite or same face of the top card.
